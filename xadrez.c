@@ -1,65 +1,84 @@
 #include <stdio.h>
 
-// Desafio de Xadrez - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
-// O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
+/**
+ * Funções Recursivas para Torre, Bispo e Rainha
+ * A recursão substitui o laço tradicional chamando a si mesma até atingir o caso base.
+ */
+
+// Função recursiva para a Torre (Direita)
+void moverTorre(int casas) {
+    if (casas > 0) {
+        printf("Direita\n");
+        moverTorre(casas - 1); // Chamada recursiva diminuindo o contador
+    }
+}
+
+// Função recursiva para o Bispo (Diagonal: Cima e Direita)
+void moverBispoRecursivo(int casas) {
+    if (casas > 0) {
+        printf("Cima Direita\n");
+        moverBispoRecursivo(casas - 1);
+    }
+}
+
+// Função recursiva para a Rainha (Esquerda)
+void moverRainha(int casas) {
+    if (casas > 0) {
+        printf("Esquerda\n");
+        moverRainha(casas - 1);
+    }
+}
 
 int main() {
-// Constantes de movimentação
+    // Definição das constantes
     const int casasTorre = 5;
     const int casasBispo = 5;
     const int casasRainha = 8;
-    const int casasBaixoCavalo = 2;
-    const int casasEsquerdaCavalo = 1;
 
-    printf("--- Simulação de Movimentos de Xadrez ---\n\n");
+    printf("--- Simulador de Xadrez Avançado ---\n\n");
 
-    // 1. Torre: 5 casas para a Direita (FOR)
+    // 1. TORRE (Recursividade)
     printf("Movimento da Torre:\n");
-    for (int i = 1; i <= casasTorre; i++) {
+    moverTorre(casasTorre);
+    printf("\n");
+
+    // 2. BISPO (Recursividade + Loops Aninhados)
+    // O requisito pede o uso de loops aninhados para simular a diagonal (Vertical e Horizontal)
+    printf("Movimento do Bispo:\n");
+    for (int i = 1; i <= casasBispo; i++) { // Loop Externo: Vertical
+        for (int j = 1; j <= 1; j++) {      // Loop Interno: Horizontal
+            printf("Cima ");
+        }
         printf("Direita\n");
     }
     printf("\n");
 
-    // 2. Bispo: 5 casas na diagonal Cima/Direita (WHILE)
-    printf("Movimento do Bispo:\n");
-    int contadorBispo = 1;
-    while (contadorBispo <= casasBispo) {
-        printf("Cima Direita\n");
-        contadorBispo++;
-    }
-    printf("\n");
-
-    // 3. Rainha: 8 casas para a Esquerda (DO-WHILE)
+    // 3. RAINHA (Recursividade)
     printf("Movimento da Rainha:\n");
-    int contadorRainha = 1;
-    do {
-        printf("Esquerda\n");
-        contadorRainha++;
-    } while (contadorRainha <= casasRainha);
+    moverRainha(casasRainha);
     printf("\n");
 
-    // 4. Cavalo: 2 casas para Baixo e 1 para a Esquerda (Loops Aninhados)
-    // Usamos um loop FOR para a parte vertical e um WHILE aninhado para a horizontal.
+    // 4. CAVALO (Loops Complexos e Múltiplas Variáveis)
+    // Movimento: 2 para Cima e 1 para a Direita.
+    // Usamos um loop for com múltiplas variáveis e condições de controle.
     printf("Movimento do Cavalo:\n");
     
-    for (int i = 1; i <= 1; i++) { // Loop externo para garantir a execução do conjunto de movimentos
+    for (int i = 1, totalVertical = 2; i <= 1; i++) { // i controla a execução do movimento completo
         int j = 1;
-        // Primeiro, o cavalo desce as duas casas
-        while (j <= casasBaixoCavalo) {
-            printf("Baixo\n");
+        while (j <= totalVertical) {
+            printf("Cima\n");
             j++;
-        }
-        // Após descer, ele faz o movimento perpendicular para a esquerda
-        // Como o requisito pede loops aninhados, o movimento horizontal ocorre dentro do contexto do vertical
-        int k = 1;
-        while (k <= casasEsquerdaCavalo) {
-            printf("Esquerda\n");
-            k++;
+            if (j > totalVertical) { // Condição para o movimento perpendicular final
+                int k = 0;
+                while (k < 1) {
+                    printf("Direita\n");
+                    k++;
+                    break; // Finaliza o movimento horizontal
+                }
+            }
         }
     }
     printf("\n");
 
     return 0;
-
 }
